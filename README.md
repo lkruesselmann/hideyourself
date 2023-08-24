@@ -94,4 +94,4 @@ Please use HideYourself responsibly and in compliance with all applicable laws a
 
 **Note:** This script is provided as-is, without any warranty or support. Use it at your own risk.
 
-If you encounter any issues or have suggestions for improvements, please feel free to [open an issue](https://github.com/yourusername/HideYourself/issues) on the GitHub repository.
+If you encounter any issues or have suggestions for improvements, please feel free to [open an issue](https://github.com/lkruesselmann/hideyourself/issues) on the GitHub repository.
