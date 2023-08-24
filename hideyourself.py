@@ -40,11 +40,10 @@ class HideYourself(QMainWindow):
         tor_layout.addWidget(self.new_server_button)
         self.tor_group.setLayout(tor_layout)
 
-        # MAC Address Section
         self.mac_group = QGroupBox('MAC Address', self)
         self.mac_group.setAlignment(Qt.AlignCenter)
 
-        self.mac_label = QLabel(self.getCurrentMAC(), self)  # Initialize with current MAC
+        self.mac_label = QLabel(self.getCurrentMAC(), self) 
         self.mac_label.setAlignment(Qt.AlignCenter)
 
         self.mac_button = QPushButton('Spoof MAC', self)
@@ -61,11 +60,10 @@ class HideYourself(QMainWindow):
         mac_layout.addWidget(self.reset_mac_button)
         self.mac_group.setLayout(mac_layout)
 
-        # Computer Name Section
         self.name_group = QGroupBox('Computer Name', self)
         self.name_group.setAlignment(Qt.AlignCenter)
 
-        self.name_label = QLabel(self.getCurrentName(), self)  # Initialize with current name
+        self.name_label = QLabel(self.getCurrentName(), self)
         self.name_label.setAlignment(Qt.AlignCenter)
 
         self.name_button = QPushButton('Spoof Name', self)
@@ -82,7 +80,6 @@ class HideYourself(QMainWindow):
         name_layout.addWidget(self.reset_name_button)
         self.name_group.setLayout(name_layout)
 
-        # Main Layout
         main_layout = QHBoxLayout()
         main_layout.addWidget(self.tor_group)
         main_layout.addWidget(self.mac_group)
@@ -124,7 +121,7 @@ class HideYourself(QMainWindow):
         self.name_label.setText(f'{new_name}')
 
     def resetName(self):
-        change_computer_name("void")
+        change_computer_name("void") # ! CHANGE VOID TO WHATEVER YOU WANT YOUR NAME TO BE !
         self.name_label.setText(f'{self.getCurrentName()}')
 
     def spoofMAC(self):
@@ -152,7 +149,7 @@ class HideYourself(QMainWindow):
     def restartWifi(self):
         try:
             subprocess.run(['networksetup', '-setairportpower', 'en0', 'off'])
-            time.sleep(2)  # Wait for 2 seconds
+            time.sleep(2) 
             subprocess.run(['networksetup', '-setairportpower', 'en0', 'on'])
         except Exception as e:
             print(f"Error restarting Wi-Fi: {e}")
