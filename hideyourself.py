@@ -18,7 +18,7 @@ class HideYourself(QMainWindow):
     def initUI(self):
         self.setWindowTitle(generate_random_string(30))
         self.setGeometry(100, 100, 500, 100)
-
+        self.setFixedSize(500, 130)
         # Tor Proxy Section
         self.tor_group = QGroupBox('Tor Proxy', self)
         self.tor_group.setAlignment(Qt.AlignCenter)
