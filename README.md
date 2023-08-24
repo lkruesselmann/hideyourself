@@ -51,7 +51,7 @@ ControlPort 9051
 4. Install the `spoof-mac` tool:
 
    ```bash
-   npm install -g spoof
+   brew install spoof-mac
    ```
 
 ## Usage
@@ -91,10 +91,6 @@ This will launch the HideYourself application.
 ## Disclaimer
 
 Please use HideYourself responsibly and in compliance with all applicable laws and regulations. Anonymity tools like Tor are designed to protect your privacy, but they should not be used for illegal activities.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
