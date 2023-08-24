@@ -26,7 +26,7 @@ class HideYourself(QMainWindow):
         self.status_label = QLabel('Tor proxy is off', self)
         self.status_label.setAlignment(Qt.AlignCenter)
 
-        self.toggle_button = QPushButton('Toggle Tor Proxy', self)
+        self.toggle_button = QPushButton('Toggle', self)
         self.toggle_button.clicked.connect(self.toggleTorProxy)
         self.toggle_button.setFocusPolicy(Qt.NoFocus)
         
@@ -46,11 +46,11 @@ class HideYourself(QMainWindow):
         self.mac_label = QLabel(self.getCurrentMAC(), self) 
         self.mac_label.setAlignment(Qt.AlignCenter)
 
-        self.mac_button = QPushButton('Spoof MAC', self)
+        self.mac_button = QPushButton('Spoof', self)
         self.mac_button.clicked.connect(self.spoofMAC)
         self.mac_button.setFocusPolicy(Qt.NoFocus)
 
-        self.reset_mac_button = QPushButton('Reset MAC', self)
+        self.reset_mac_button = QPushButton('Reset', self)
         self.reset_mac_button.clicked.connect(self.resetMAC)
         self.reset_mac_button.setFocusPolicy(Qt.NoFocus)
 
@@ -66,11 +66,11 @@ class HideYourself(QMainWindow):
         self.name_label = QLabel(self.getCurrentName(), self)
         self.name_label.setAlignment(Qt.AlignCenter)
 
-        self.name_button = QPushButton('Spoof Name', self)
+        self.name_button = QPushButton('Spoof', self)
         self.name_button.clicked.connect(self.spoofName)
         self.name_button.setFocusPolicy(Qt.NoFocus)
 
-        self.reset_name_button = QPushButton('Reset Name', self)
+        self.reset_name_button = QPushButton('Reset', self)
         self.reset_name_button.clicked.connect(self.resetName)
         self.reset_name_button.setFocusPolicy(Qt.NoFocus)
 
