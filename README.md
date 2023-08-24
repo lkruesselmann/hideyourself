@@ -51,7 +51,7 @@ ControlPort 9051
 4. Install the `spoof-mac` tool:
 
    ```bash
-   brew install spoof-mac
+   npm install -g spoof
    ```
 
 ## Usage
@@ -82,7 +82,7 @@ This will launch the HideYourself application.
 
 - Click the "Spoof Name" button to change your computer's name to a random string, enhancing your online anonymity.
 
-- Click the "Reset Name" button to revert your computer's name to its original value.
+- Click the "Reset Name" button to revert your computer's name to the one specified in the script. You can change the default name by modifying the script.
 
 ### Restarting Wi-Fi
 
@@ -91,6 +91,10 @@ This will launch the HideYourself application.
 ## Disclaimer
 
 Please use HideYourself responsibly and in compliance with all applicable laws and regulations. Anonymity tools like Tor are designed to protect your privacy, but they should not be used for illegal activities.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
