@@ -1,4 +1,4 @@
-# HideYourself - A Privacy Enhancement Tool
+# Hide Yourself - A Privacy Enhancement Tool
 
 HideYourself is a Python script and graphical user interface (GUI) application designed to enhance your online privacy by providing tools to toggle Tor proxy, spoof MAC addresses, and change your computer name. This script is especially useful when you want to protect your identity and maintain a level of anonymity while using the internet.
 
