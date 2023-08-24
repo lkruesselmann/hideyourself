@@ -80,7 +80,7 @@ This will launch the HideYourself application.
 
 - Click the "Spoof Name" button to change your computer's name to a random string, enhancing your online anonymity.
 
-- Click the "Reset Name" button to revert your computer's name to the one specified in the script. You can change the default name by modifying the script.
+- Click the "Reset Name" button to revert your computer's name to the one specified in the script. You can change the default name by modifying the script (line 124).
 
 ### Restarting Wi-Fi
 
