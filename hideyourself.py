@@ -16,8 +16,8 @@ class HideYourself(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle(generate_random_string(20))
-        self.setGeometry(100, 100, 400, 100)
+        self.setWindowTitle(generate_random_string(30))
+        self.setGeometry(100, 100, 500, 100)
 
         # Tor Proxy Section
         self.tor_group = QGroupBox('Tor Proxy', self)
@@ -30,7 +30,7 @@ class HideYourself(QMainWindow):
         self.toggle_button.clicked.connect(self.toggleTorProxy)
         self.toggle_button.setFocusPolicy(Qt.NoFocus)
         
-        self.new_server_button = QPushButton('Get New Relay', self)
+        self.new_server_button = QPushButton('New Relay', self)
         self.new_server_button.clicked.connect(self.getNewTorServer)
         self.new_server_button.setFocusPolicy(Qt.NoFocus)
 
@@ -43,7 +43,7 @@ class HideYourself(QMainWindow):
         self.mac_group = QGroupBox('MAC Address', self)
         self.mac_group.setAlignment(Qt.AlignCenter)
 
-        self.mac_label = QLabel(self.getCurrentMAC(), self) 
+        self.mac_label = QLabel(self.getCurrentMAC(), self)
         self.mac_label.setAlignment(Qt.AlignCenter)
 
         self.mac_button = QPushButton('Spoof', self)
@@ -149,7 +149,7 @@ class HideYourself(QMainWindow):
     def restartWifi(self):
         try:
             subprocess.run(['networksetup', '-setairportpower', 'en0', 'off'])
-            time.sleep(2) 
+            time.sleep(2)
             subprocess.run(['networksetup', '-setairportpower', 'en0', 'on'])
         except Exception as e:
             print(f"Error restarting Wi-Fi: {e}")
@@ -179,10 +179,10 @@ def change_computer_name(new_name):
 def spoof_mac_address(randomize=True):
     try:
         if randomize:
-            os.system('sudo spoof-mac randomize en0') 
+            os.system('sudo spoof-mac randomize en0')
             print("MAC randomized")
         else:
-            os.system('sudo spoof-mac reset en0') 
+            os.system('sudo spoof-mac reset en0')
             print("MAC reset to original")
     except Exception as e:
         print(f"Error: {e}")
