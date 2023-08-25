@@ -6,9 +6,12 @@ import string
 import time
 from stem import Signal
 from stem.control import Controller
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget, QGroupBox, QHBoxLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget, QGroupBox, QHBoxLayout, QFileDialog, QMessageBox, QSpacerItem
 from PyQt5.QtCore import Qt
 
+FILE_SHREDDER_PASSES = 5
+WIDTH = 650
+HEIGHT = 170
 
 class HideYourself(QMainWindow):
     def __init__(self):
@@ -17,22 +20,33 @@ class HideYourself(QMainWindow):
 
     def initUI(self):
         self.setWindowTitle(generate_random_string(30))
-        self.setGeometry(100, 100, 500, 130)
-        self.setFixedSize(500, 130)
+        self.setGeometry(100, 100, WIDTH, HEIGHT)
+        self.setFixedSize(WIDTH, HEIGHT)
 
+        self.createTorProxyGroup()
+        self.createMacAddressGroup()
+        self.createComputerNameGroup()
+        self.createFileShredderGroup()
+
+        main_layout = QHBoxLayout()
+        main_layout.addWidget(self.tor_group)
+        main_layout.addWidget(self.mac_group)
+        main_layout.addWidget(self.name_group)
+        main_layout.addWidget(self.shredder_group)
+
+        container = QWidget()
+        container.setLayout(main_layout)
+        self.setCentralWidget(container)
+
+    def createTorProxyGroup(self):
         self.tor_group = QGroupBox('Tor Proxy', self)
         self.tor_group.setAlignment(Qt.AlignCenter)
 
         self.status_label = QLabel('Tor proxy is off', self)
         self.status_label.setAlignment(Qt.AlignCenter)
 
-        self.toggle_button = QPushButton('Toggle', self)
-        self.toggle_button.clicked.connect(self.toggleTorProxy)
-        self.toggle_button.setFocusPolicy(Qt.NoFocus)
-        
-        self.new_server_button = QPushButton('New Relay', self)
-        self.new_server_button.clicked.connect(self.getNewTorServer)
-        self.new_server_button.setFocusPolicy(Qt.NoFocus)
+        self.toggle_button = self.createButton('Toggle', self.toggleTorProxy)
+        self.new_server_button = self.createButton('New Relay', self.getNewTorServer)
 
         tor_layout = QVBoxLayout()
         tor_layout.addWidget(self.status_label)
@@ -40,19 +54,15 @@ class HideYourself(QMainWindow):
         tor_layout.addWidget(self.new_server_button)
         self.tor_group.setLayout(tor_layout)
 
+    def createMacAddressGroup(self):
         self.mac_group = QGroupBox('MAC Address', self)
         self.mac_group.setAlignment(Qt.AlignCenter)
 
         self.mac_label = QLabel(self.getCurrentMAC(), self)
         self.mac_label.setAlignment(Qt.AlignCenter)
 
-        self.mac_button = QPushButton('Spoof', self)
-        self.mac_button.clicked.connect(self.spoofMAC)
-        self.mac_button.setFocusPolicy(Qt.NoFocus)
-
-        self.reset_mac_button = QPushButton('Reset', self)
-        self.reset_mac_button.clicked.connect(self.resetMAC)
-        self.reset_mac_button.setFocusPolicy(Qt.NoFocus)
+        self.mac_button = self.createButton('Spoof', self.spoofMAC)
+        self.reset_mac_button = self.createButton('Reset', self.resetMAC)
 
         mac_layout = QVBoxLayout()
         mac_layout.addWidget(self.mac_label)
@@ -60,19 +70,15 @@ class HideYourself(QMainWindow):
         mac_layout.addWidget(self.reset_mac_button)
         self.mac_group.setLayout(mac_layout)
 
+    def createComputerNameGroup(self):
         self.name_group = QGroupBox('Computer Name', self)
         self.name_group.setAlignment(Qt.AlignCenter)
 
         self.name_label = QLabel(self.getCurrentName(), self)
         self.name_label.setAlignment(Qt.AlignCenter)
 
-        self.name_button = QPushButton('Spoof', self)
-        self.name_button.clicked.connect(self.spoofName)
-        self.name_button.setFocusPolicy(Qt.NoFocus)
-
-        self.reset_name_button = QPushButton('Reset', self)
-        self.reset_name_button.clicked.connect(self.resetName)
-        self.reset_name_button.setFocusPolicy(Qt.NoFocus)
+        self.name_button = self.createButton('Spoof', self.spoofName)
+        self.reset_name_button = self.createButton('Reset', self.resetName)
 
         name_layout = QVBoxLayout()
         name_layout.addWidget(self.name_label)
@@ -80,14 +86,27 @@ class HideYourself(QMainWindow):
         name_layout.addWidget(self.reset_name_button)
         self.name_group.setLayout(name_layout)
 
-        main_layout = QHBoxLayout()
-        main_layout.addWidget(self.tor_group)
-        main_layout.addWidget(self.mac_group)
-        main_layout.addWidget(self.name_group)
+    def createFileShredderGroup(self):
+        self.shredder_group = QGroupBox('File Shredder', self)
+        self.shredder_group.setAlignment(Qt.AlignCenter)
 
-        container = QWidget()
-        container.setLayout(main_layout)
-        self.setCentralWidget(container)
+        self.selected_file_label = QLabel('None', self)
+        self.selected_file_label.setAlignment(Qt.AlignCenter)
+
+        self.select_file_button = self.createButton('Select', self.selectFile)
+        self.shred_button = self.createButton('Shred', self.shredFile)
+
+        shredder_layout = QVBoxLayout()
+        shredder_layout.addWidget(self.selected_file_label)
+        shredder_layout.addWidget(self.select_file_button)
+        shredder_layout.addWidget(self.shred_button)
+        self.shredder_group.setLayout(shredder_layout)
+
+    def createButton(self, text, action):
+        button = QPushButton(text, self)
+        button.clicked.connect(action)
+        button.setFocusPolicy(Qt.NoFocus)
+        return button
 
     def toggleTorProxy(self):
         current_status = self.status_label.text()
@@ -164,6 +183,41 @@ class HideYourself(QMainWindow):
         except Exception as e:
             print(f"An error occurred while getting a new Tor server: {e}")
 
+    def file_shredder(self, filename, passes=FILE_SHREDDER_PASSES):
+        try:
+            file_size = os.path.getsize(filename)
+            with open(filename, 'rb+') as file:
+                for _ in range(passes):
+                    # Generate random data for overwriting
+                    random_data = bytearray(os.urandom(file_size))
+                    file.seek(0)
+                    file.write(random_data)
+                    file.flush()
+                # Truncate the file to its original size
+                file.truncate()
+            os.remove(filename)  # Finally, delete the file
+            print(f'{filename} has been securely shredded.')
+        except Exception as e:
+            print(f'Error shredding {filename}: {e}')
+                
+    def selectFile(self):
+        options = QFileDialog.Options()
+        file_path, _ = QFileDialog.getOpenFileName(self, "Select File to Shred", "", "All Files (*)", options=options)
+        if file_path:
+            self.selected_file = file_path
+            self.selected_file_label.setText(f'{file_path}')
+        else:
+            self.selected_file_label.setText('None')
+
+    def shredFile(self):
+        if hasattr(self, 'selected_file'):
+            file_to_shred = self.selected_file
+            self.file_shredder(file_to_shred)  # Call the method on the instance
+            self.selected_file_label.setText('None')
+        else:
+            QMessageBox.warning(self, 'File Shredder', 'Please select a file to shred.')
+
+
 def generate_random_string(length):
     characters = string.ascii_letters + string.digits
     return ''.join(random.choice(characters) for _ in range(length))
@@ -192,6 +246,7 @@ def main():
     window = HideYourself()
     window.show()
     sys.exit(app.exec_())
+    
 
 if __name__ == '__main__':
     main()
