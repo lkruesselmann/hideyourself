@@ -16,7 +16,7 @@ Before using HideYourself, make sure you have the following requirements install
 
 - [Tor](https://www.torproject.org/): You need to install Tor to use its proxy functionality.
 
-- [spoof-mac](https://github.com/feross/spoof): This tool is required for MAC address spoofing.
+- [spoof-mac](https://github.com/feross/SpoofMAC): This tool is required for MAC address spoofing.
 
 Additionally, you should configure your Tor `torrc` file with the following settings:
 
