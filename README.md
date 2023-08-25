@@ -10,6 +10,8 @@ HideYourself is a Python script and graphical user interface (GUI) application d
 
 - **Computer Name Spoofing**: Change your computer's name to further enhance your anonymity.
 
+- **File Shredder**: Overwrite files and delete them safely.
+
 ## Requirements
 
 Before using HideYourself, make sure you have the following requirements installed:
@@ -81,6 +83,12 @@ This will launch the HideYourself application.
 - Click the "Spoof Name" button to change your computer's name to a random string, enhancing your online anonymity.
 
 - Click the "Reset Name" button to revert your computer's name to the one specified in the script. You can change the default name by modifying the script (line 124).
+
+### Computer Name Spoofing
+
+- Click the "Select" button to select a file you want to shred.
+
+- Click the "Shred" button to shred it.
 
 ### Restarting Wi-Fi
 
